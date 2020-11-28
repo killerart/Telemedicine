@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/notif_card_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="onDoctorClick"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardCornerRadius="1dp"
+        app:cardElevation="1dp"
+        app:cardMaxElevation="0dp"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="30dp"
+            android:paddingTop="16dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="16dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/notif_doctor_info_photo"
+                android:layout_width="@dimen/doctor_photo_w"
+                android:layout_height="@dimen/doctor_photo_h"
+                android:src="@drawable/doctor_photo"
+                app:civ_border_color="@android:color/transparent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/notif_doctor_info_name"
+                style="@style/notification_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/doctor_name_margin_start"
+                android:layout_marginTop="10dp"
+                android:maxLines="2"
+                android:text="Dudung Sokmati"
+                app:layout_constraintStart_toEndOf="@+id/notif_doctor_info_photo"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/notif_doctor_info_specialty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/specialty_and_rating_margin_top"
+                android:fontFamily="@font/font_family_proxima_nova"
+                android:text="Eye Specialist"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/smaller_text_size"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="@id/notif_doctor_info_name"
+                app:layout_constraintTop_toBottomOf="@id/notif_doctor_info_name" />
+
+            <RatingBar
+                android:id="@+id/notif_doctor_info_rating_bar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="@dimen/specialty_and_rating_margin_top"
+                android:max="5"
+                android:numStars="5"
+                android:rating="4.5"
+                android:scaleX="1.2"
+                android:scaleY="1.2"
+                android:stepSize="0.1"
+                android:theme="@style/RatingBar"
+                app:layout_constraintStart_toStartOf="@id/notif_doctor_info_specialty"
+                app:layout_constraintTop_toBottomOf="@id/notif_doctor_info_specialty" />
+
+            <TextView
+                android:id="@+id/notif_doctor_info_rating_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="4.5"
+                android:textColor="@color/colorText2"
+                android:textSize="@dimen/smaller_text_size"
+                app:layout_constraintBottom_toBottomOf="@+id/notif_doctor_info_rating_bar"
+                app:layout_constraintStart_toEndOf="@id/notif_doctor_info_rating_bar"
+                app:layout_constraintTop_toTopOf="@id/notif_doctor_info_rating_bar" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

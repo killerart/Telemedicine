@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.telemedicine.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_doctorListFragment"
+            app:destination="@id/doctorListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.telemedicine.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/scheduleFragment"
+        android:name="com.example.telemedicine.ScheduleFragment"
+        android:label="@string/title_schedule" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.telemedicine.ProfileFragment"
+        android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/doctorListFragment"
+        android:name="com.example.telemedicine.DoctorListFragment"
+        android:label="fragment_doctor_list"
+        tools:layout="@layout/fragment_doctor_list" >
+        <action
+            android:id="@+id/action_doctorListFragment_to_doctorDetailsFragment"
+            app:destination="@id/doctorDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/doctorDetailsFragment"
+        android:name="com.example.telemedicine.DoctorDetailsFragment"
+        android:label="fragment_doctor_details"
+        tools:layout="@layout/fragment_doctor_details" />
+</navigation>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#07da5f</color>
+    <color name="colorPrimaryDark">#07da5f</color>
+    <color name="colorAccent">#07da5f</color>
+    <color name="colorText1">#37474e</color>
+    <color name="colorText2">#90a4ae</color>
+    <color name="colorText3">#38474f</color>
+    <color name="colorText4">#757e99</color>
+    <color name="colorText5">#8fa4ae</color>
+    <color name="colorText6">#ced6db</color>
+    <color name="colorWhite">#fff</color>
+    <color name="gray_special">#8fa4ad</color>
+    <color name="colorPrimaryAlpha">#5E07DA5F</color>
+    <color name="greenTextColor">#07da5f</color>
+    <color name="WhiteColor">#FFFFFF</color>
+    <color name="WhiteColorAlpha">#40FFFFFF</color>
+    <color name="toolbarBgColor">#07da5f</color>
+    <color name="DarkColor">#282828</color>
+    <color name="hintColor">#7D7B7B</color>
+    <color name="colorAuxiliary">#EB5959</color>
+    <color name="navBarIconColor">#607d8a</color>
+    <color name="SlightlyBlue">#89A8B7</color>
+    <color name="StarsColor">#ffd500</color>
+    <color name="listBackGround">#f7f8f8</color>
+    <color name="colorLightBlue">#00D9C7</color>
+</resources>
