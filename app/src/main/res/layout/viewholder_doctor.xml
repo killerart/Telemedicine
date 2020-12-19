@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity">
+    tools:context=".DoctorListActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/notif_card_view"
@@ -16,7 +16,6 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
-        android:onClick="onDoctorClick"
         app:cardBackgroundColor="@color/colorWhite"
         app:cardCornerRadius="1dp"
         app:cardElevation="1dp"

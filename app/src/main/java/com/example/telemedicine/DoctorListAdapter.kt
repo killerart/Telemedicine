@@ -1,12 +1,13 @@
 package com.example.telemedicine
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SortedList
 import androidx.recyclerview.widget.SortedListAdapterCallback
 
-class DoctorListAdapter : RecyclerView.Adapter<DoctorViewHolder>() {
+class DoctorListAdapter() : RecyclerView.Adapter<DoctorViewHolder>() {
     var doctorList: SortedList<Doctor>
 
     init {
@@ -14,7 +15,7 @@ class DoctorListAdapter : RecyclerView.Adapter<DoctorViewHolder>() {
             object : SortedListAdapterCallback<Doctor>(this) {
                 override fun compare(o1: Doctor?, o2: Doctor?): Int {
                     if (o1 != null && o2 != null)
-                        return o2.rating.compareTo(o1.rating)
+                        return o2.Stars.compareTo(o1.Stars)
                     if (o1 == null)
                         return 1
                     return -1
@@ -33,13 +34,13 @@ class DoctorListAdapter : RecyclerView.Adapter<DoctorViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DoctorViewHolder {
         LayoutInflater.from(parent.context).inflate(R.layout.viewholder_doctor, parent, false)
             .let {
-                return DoctorViewHolder(it)
+                return DoctorViewHolder(parent.context, it)
             }
     }
 
     override fun onBindViewHolder(holder: DoctorViewHolder, position: Int) {
         doctorList[position]?.also { doctor ->
-            holder.setRating(doctor.rating)
+            holder.setData(doctor)
         }
     }
 

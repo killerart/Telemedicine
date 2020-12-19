@@ -101,7 +101,7 @@
         style="@style/notification_header" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/notifications_location"
         style="@style/notification_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -122,10 +122,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/notifications_location" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/notifications_request_description"
         style="@style/notification_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -145,13 +145,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/notifications_request_description" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/notif_card_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:onClick="onDoctorClick"
         app:cardBackgroundColor="@color/colorWhite"
         app:cardCornerRadius="1dp"
         app:cardElevation="1dp"
