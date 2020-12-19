@@ -1,7 +1,15 @@
 package com.example.telemedicine
 
+import android.R.attr
+import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.provider.MediaStore
+import android.transition.Visibility
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -9,7 +17,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.example.telemedicine.api.ApiService
+import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.sign_up_include.*
+import java.io.ByteArrayOutputStream
+import java.io.FileNotFoundException
+import java.io.IOException
+
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var fullNameEditText: EditText
@@ -19,6 +32,11 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var addressEditText: EditText
     private lateinit var usernameEditText: EditText
     private lateinit var passwordEditText: EditText
+    private var photoBase64: String? = null
+
+    companion object {
+        const val GET_FROM_GALLERY = 5
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,5 +73,53 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
             }
         )
+    }
+
+    fun onPhotoClick(view: View) {
+        Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.INTERNAL_CONTENT_URI
+        ).also {
+            startActivityForResult(it, GET_FROM_GALLERY)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                GET_FROM_GALLERY -> {
+                    val selectedImage = data?.data
+                    try {
+                        if (selectedImage != null) {
+                            val bitmap =
+                                MediaStore.Images.Media.getBitmap(
+                                    this.contentResolver,
+                                    selectedImage
+                                )
+                            val byteArrayOutputStream = ByteArrayOutputStream()
+                            bitmap.compress(
+                                Bitmap.CompressFormat.JPEG,
+                                100,
+                                byteArrayOutputStream
+                            )
+                            val byteArray = byteArrayOutputStream.toByteArray()
+                            photoBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT)
+                            sign_up_photos.visibility = View.GONE
+                            sign_up_add_photo_text.visibility = View.GONE
+                            sign_up_circle_photo.visibility = View.VISIBLE
+                            sign_up_circle_photo.setImageBitmap(bitmap)
+                        }
+                    } catch (e: FileNotFoundException) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace()
+                    } catch (e: IOException) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace()
+                    }
+                }
+            }
+        }
     }
 }

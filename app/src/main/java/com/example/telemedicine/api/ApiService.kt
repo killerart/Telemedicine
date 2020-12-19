@@ -12,7 +12,7 @@ import com.example.telemedicine.LoginActivity
 import com.example.telemedicine.MainApplication
 import org.json.JSONObject
 
-class ApiService {
+class ApiService private constructor() {
     companion object {
         val instance: ApiService = ApiService()
         const val apiUrl = "http://81.180.72.17/api/"
@@ -51,9 +51,11 @@ class ApiService {
             }
 
             override fun getHeaders(): MutableMap<String, String> {
-                return hashMapOf(
-                    "token" to userToken.orEmpty()
-                )
+                return if (userToken != null) {
+                    hashMapOf(
+                        "token" to userToken.orEmpty()
+                    )
+                } else super.getHeaders()
             }
         }
         queue.add(request)
@@ -62,7 +64,8 @@ class ApiService {
     fun sendLoginRequest(
         email: String?,
         password: String?,
-        listener: Response.Listener<String>? = null
+        listener: Response.Listener<String>? = null,
+        errorListener: Response.ErrorListener? = null
     ) {
         val request =
             object : StringRequest(Method.POST, apiUrl + "Login/UserAuth",
@@ -73,10 +76,14 @@ class ApiService {
                     listener?.onResponse(response)
                 },
                 {
-                    with(MainApplication.context) {
-                        Intent(this, LoginActivity::class.java).also {
-                            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            startActivity(it)
+                    if (errorListener != null) {
+                        errorListener.onErrorResponse(it)
+                    } else {
+                        with(MainApplication.context) {
+                            Intent(this, LoginActivity::class.java).also {
+                                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                startActivity(it)
+                            }
                         }
                     }
                 }

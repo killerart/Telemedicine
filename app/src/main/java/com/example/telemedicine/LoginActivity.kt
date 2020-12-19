@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.telemedicine.api.ApiService
 import kotlinx.android.synthetic.main.activity_login.*
@@ -22,12 +23,16 @@ class LoginActivity : AppCompatActivity() {
     fun onLoginClick(view: View) {
         ApiService.instance.sendLoginRequest(
             emailEditText.text.toString(),
-            passwordEditText.text.toString()
-        ) {
-            Intent(this, MainActivity::class.java).also {
-                startActivity(it)
+            passwordEditText.text.toString(),
+            {
+                Intent(this, MainActivity::class.java).also {
+                    startActivity(it)
+                }
+            },
+            {
+                Toast.makeText(this@LoginActivity, "Incorrect login data", Toast.LENGTH_SHORT).show()
             }
-        }
+        )
     }
 
     fun onSignUpClick(view: View) {
