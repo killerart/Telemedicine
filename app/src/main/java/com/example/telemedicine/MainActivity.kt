@@ -1,5 +1,6 @@
 package com.example.telemedicine
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -8,7 +9,12 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.android.volley.Request
+import com.example.telemedicine.api.ApiService
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.home_include.*
+import kotlinx.android.synthetic.main.notifications_include.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +22,9 @@ class MainActivity : AppCompatActivity() {
     private var selectedId: Int = R.id.navigation_home
     private lateinit var fragmentTitleTextView: TextView
     private lateinit var navigationView: BottomNavigationView
+    var consultation: Consultation? = null
+    var doctor: Doctor? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -67,11 +76,9 @@ class MainActivity : AppCompatActivity() {
         add.isEnabled = false
         when (itemId) {
             R.id.navigation_home -> return HomeFragment()
-            R.id.navigation_notifications -> return NotificationsFragment()
+            R.id.navigation_notifications -> return NotificationsFragment(this)
             R.id.navigation_schedule -> return ScheduleFragment()
             R.id.navigation_profile -> return ProfileFragment()
-            R.id.doctorListFragment -> return DoctorListFragment()
-            R.id.doctorDetailsFragment -> return DoctorDetailsFragment()
         }
         return HomeFragment()
     }
@@ -101,14 +108,43 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onRequestClick(view: View) {
-        setFragment(R.id.doctorListFragment)
-        fragmentTitleTextView.text = getString(R.string.doctor_list)
+        val formData = hashMapOf(
+            "Name" to home_name_edit.text.toString(),
+            "Disease" to home_disease_edit.text.toString(),
+            "Address" to home_name_edit.text.toString(),
+            "Description" to home_description_edit.text.toString(),
+        )
+        ApiService.instance.sendFormRequest(Request.Method.POST, "Doctor/AddConsultation", formData,
+            { consultationJson ->
+                consultation = Gson().fromJson(consultationJson, Consultation::class.java)
+                    .also { consultation ->
+                        ApiService.instance.sendFormRequest(
+                            Request.Method.GET,
+                            "Doctor/GetDoctor/${consultation.DocId}",
+                            null,
+                            { doctorJson ->
+                                doctor = Gson().fromJson(doctorJson, Doctor::class.java)
+                                setFragment(R.id.navigation_notifications)
+                            }
+                        )
+                    }
+            }
+        )
+//        Intent(this, DoctorListActivity::class.java).also {
+//            startActivity(it)
+//        }
     }
 
-    fun onDoctorClick(view: View) {
-        setFragment(R.id.doctorDetailsFragment)
-        fragmentTitleTextView.text = getString(R.string.doctor_details)
+    fun onDoctorClick(view: View?) {
+        Intent(this, DoctorDetailsActivity::class.java)
+            .apply {
+                putExtra(DoctorDetailsActivity.DOCTOR_KEY, doctor)
+            }
+            .also {
+                startActivity(it)
+            }
     }
+
 
     companion object {
         private const val MENU_KEY = "selected"
